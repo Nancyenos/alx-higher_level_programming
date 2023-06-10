@@ -8,5 +8,7 @@ elif num_args == 1:
     print("{} argument:".format(num_args))
 else:
     print("{} arguments:".format(num_args))
-for i in range(len(arg_name)):
-    print("{}: {}".format(i+1, arg_name[i]))
+
+if __name__ == "__main__":
+    for i in range(len(arg_name)):
+        print("{}: {}".format(i+1, arg_name[i]))
