@@ -4,6 +4,8 @@
 
 
 class Rectangle:
+    number_of_instances = 0
+    symbol = "#"
     """A class representing a rectangle."""
 
     def __init__(self, width=0, height=0):
