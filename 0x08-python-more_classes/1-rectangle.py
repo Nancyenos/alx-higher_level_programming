@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+""" defines a class of arectangle with height and width private """
+
+
 class Rectangle:
     """A class representing a rectangle."""
 
