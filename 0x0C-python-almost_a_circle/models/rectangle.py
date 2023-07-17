@@ -85,7 +85,13 @@ class Rectangle(Base):
         
 
 
-    def update(self, *args):
+    def update(self, *args, **kwargs):
+        """ update the rectangle with key and positional args
+        args:width(int) 
+             height(int)
+             x(int)
+             y (int)
+        """
         num_args = len(args)
         if num_args >= 1:
             self.id = args[0]
@@ -97,6 +103,21 @@ class Rectangle(Base):
             self.x = args[3]
         if num_args >= 5:
             self.y = args[4]
+
+        if args:
+            kwargs = {}
+
+        for key, value in kwargs.items():
+            if key == 'id':
+                self.id = value
+            elif key == 'width':
+                self.width = value
+            elif key == 'height':
+                self.height = value
+            elif key == 'x':
+                self.x = value
+            elif key == 'y':
+                self.y = value
 
     def __str__(self):
         return("[Rectangle] ({}) {}/{} - {}/{}"\
