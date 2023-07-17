@@ -78,9 +78,26 @@ class Rectangle(Base):
 
     def display(self):
         """ prints rectangle with hashes in stdout"""
+        for i in range(self.y):
+            print()
         for _ in range(self.height):
-            print("#" * self.width)
+            print(" " * self.x + "#" * self.width)
+        
+
+
+    def update(self, *args):
+        num_args = len(args)
+        if num_args >= 1:
+            self.id = args[0]
+        if num_args >= 2:
+            self.width = args[1]
+        if num_args >= 3:
+            self.height = args[2]
+        if num_args >= 4:
+            self.x = args[3]
+        if num_args >= 5:
+            self.y = args[4]
 
     def __str__(self):
         return("[Rectangle] ({}) {}/{} - {}/{}"\
-                .format(self.id, self.x, self.y, self.width, self.height))
+                .format(self.id, self.x, self.y, self.width, self.height))            
