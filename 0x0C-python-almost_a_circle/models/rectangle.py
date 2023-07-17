@@ -23,14 +23,13 @@ class Rectangle(Base):
     @width.setter
     def width(self, value):
         """ sets width properties """
-        if not isinstance(value, int): 
+        if not isinstance(value, int):
             """ If the input is not an integer,"""
             raise TypeError("width must be an integer")
         if value <= 0:
             raise ValueError("width must be > 0")
 
         self.__width = value
-
 
     @property
     def height(self):
@@ -46,8 +45,10 @@ class Rectangle(Base):
         if value <= 0:
             raise ValueError("height must be > 0")
         self.__height = value
+
     @property
     def x(self):
+        """ get coordinate x """
         return self.__x
 
     @x.setter
@@ -58,8 +59,10 @@ class Rectangle(Base):
         if value < 0:
             raise ValueError("x must be >= 0")
         self.__x = value
+
     @property
     def y(self):
+        """ get y coordinate """
         return self.__y
 
     @y.setter
@@ -81,12 +84,10 @@ class Rectangle(Base):
             print()
         for _ in range(self.height):
             print(" " * self.x + "#" * self.width)
-        
-
 
     def update(self, *args, **kwargs):
         """ update the rectangle with key and positional args
-        args:width(int) 
+        args:width(int)
              height(int)
              x(int)
              y (int)
@@ -129,5 +130,5 @@ class Rectangle(Base):
             }
 
     def __str__(self):
-        return("[Rectangle] ({}) {}/{} - {}/{}"\
-                .format(self.id, self.x, self.y, self.width, self.height))            
+        return "[Rectangle] ({}) {}/{} - {}/{}"\
+                .format(self.id, self.x, self.y, self.width, self.height)
