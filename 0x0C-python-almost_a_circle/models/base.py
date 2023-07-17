@@ -60,13 +60,14 @@ class Base:
         dummy.update(**dictionary)
         return dummy
 
-     @classmethod
+    @classmethod
     def load_from_file(cls):
+        """ list of classes from json file """
         filename = cls.__name__ + ".json"
         try:
             with open(filename, "r") as file:
                 json_string = file.read()
-                json_data = cls.from_json_string(json_string)
+                json_data = Base.from_json_string(json_string)
                 instances = [cls.create(**data) for data in json_data]
                 return instances
         except FileNotFoundError:
