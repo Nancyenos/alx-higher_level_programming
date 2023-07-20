@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import os
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
@@ -86,5 +87,79 @@ class TestBase_to_json_string(unittest.TestCase):
     def test_to_json_string_more_than_one_arg(self):
         with self.assertRaises(TypeError):
             Base.to_json_string([], 1)
+
+class TestBase_save_to_file(unittest.TestCase):
+    """Unittests for testing save_to_file method of Base class."""
+
+    @classmethod
+    def tearDown(self):
+        """Delete any created files."""
+        try:
+            os.remove("Rectangle.json")
+        except IOError:
+            pass
+        try:
+            os.remove("Square.json")
+        except IOError:
+            pass
+        try:
+            os.remove("Base.json")
+        except IOError:
+            pass
+
+    def test_save_to_file_one_rectangle(self):
+        r = Rectangle(10, 7, 2, 8, 5)
+        Rectangle.save_to_file([r])
+        with open("Rectangle.json", "r") as f:
+            self.assertTrue(len(f.read()) == 53)
+
+    def test_save_to_file_one_square(self):
+        s = Square(10, 7, 2, 8)
+        Square.save_to_file([s])
+        with open("Square.json", "r") as f:
+            self.assertTrue(len(f.read()) == 39)
+
+    def test_save_to_file_two_squares(self):
+        s1 = Square(10, 7, 2, 8)
+        s2 = Square(8, 1, 2, 3)
+        Square.save_to_file([s1, s2])
+        with open("Square.json", "r") as f:
+            self.assertTrue(len(f.read()) == 77)
+
+    def test_save_to_file_cls_name_for_filename(self):
+        s = Square(10, 7, 2, 8)
+        Base.save_to_file([s])
+        with open("Base.json", "r") as f:
+            self.assertTrue(len(f.read()) == 39)
+
+    def test_save_to_file_overwrite(self):
+        s = Square(9, 2, 39, 2)
+        Square.save_to_file([s])
+        s = Square(10, 7, 2, 8)
+        Square.save_to_file([s])
+
+class TestBase_from_json_string(unittest.TestCase):
+    """Unittests for testing from_json_string method of Base class."""
+
+    def test_from_json_string_type(self):
+        list_input = [{"id": 89, "width": 10, "height": 4}]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertEqual(list, type(list_output))
+
+    def test_from_json_string_one_rectangle(self):
+        list_input = [{"id": 89, "width": 10, "height": 4, "x": 7}]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertEqual(list_input, list_output)
+
+    def test_from_json_string_two_rectangles(self):
+        list_input = [
+            {"id": 89, "width": 10, "height": 4, "x": 7, "y": 8},
+            {"id": 98, "width": 5, "height": 2, "x": 1, "y": 3},
+        ]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertEqual(list_input, list_output)
 if __name__ == "__main__":
     unittest.main()
